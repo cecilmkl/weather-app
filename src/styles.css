@@ -1,0 +1,111 @@
+.container {
+  font-family: "Lato", sans-serif;
+  color: #212529;
+  font-weight: 300;
+  max-width: 60%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ------ Background colors -----*/
+.whole-app,
+.other-li {
+  background: rgba(255, 235, 205, 1);
+}
+
+#today,
+.other-weather,
+#graph-card,
+#quote-card {
+  background: rgba(255, 235, 205, 0.5);
+}
+/* ----- End Backgrounds--------*/
+
+#search-button,
+#current-button {
+  border: 1px solid #212529;
+  background-color: rgb(255, 235, 205);
+  transition: all 200ms ease-in-out;
+}
+
+#search-button:hover,
+#current-button:hover {
+  border: 1px solid rgb(228, 187, 126);
+  background-color: rgb(228, 187, 126);
+}
+
+#cityname {
+  font-size: 40px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.today-emoji {
+  font-size: 120px;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  padding: 1px 1px;
+  font-size: 15px;
+}
+
+td {
+  padding: 0px;
+}
+
+td.weather-details-values {
+  width: 35%;
+}
+.today-details {
+  margin-top: 5px;
+  font-size: 22px;
+  font-weight: 100;
+}
+
+#today-weather-details {
+  font-size: normal;
+}
+.other-weather {
+  font-size: 18px;
+}
+
+.other-emoji {
+  font-size: 27px;
+  padding: 0 5px;
+}
+
+.lower-limit {
+  font-weight: 100;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.temporary-graph {
+  display: block;
+  margin: 0 auto;
+  width: 400px;
+}
+
+.today-temperature {
+  font-size: 50px;
+  font-weight: 300;
+}
+
+.degrees {
+  font-size: 70%;
+}
+
+.degree {
+  color: #212529;
+  text-decoration: none;
+  /* font-weight: 700; */
+}
+
+.degree:hover {
+  color: rgb(228, 187, 126);
+}
+
+.chosenDegree {
+  font-weight: 500;
+}

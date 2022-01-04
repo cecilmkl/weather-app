@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather Project</title>
+    <meta charset="UTF-8" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Style imports: -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card mt-4 whole-app">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-8">
+              <form class="input-group mb-2" id="city-form">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="City..."
+                  id="city-input"
+                />
+                <div class="input-group-append">
+                  <button class="btn" type="button" id="search-button">
+                    Search
+                  </button>
+                  <button class="btn" type="button" id="current-button">
+                    Current Location
+                  </button>
+                </div>
+              </form>
+              <div class="card">
+                <div class="card-body" id="today">
+                  <div class="row">
+                    <div class="col-6 mt-0" id="today-weather-details">
+                      <h1 class="cityname" id="cityname"></h1>
+                      <!-- <span class="today-emoji">🌨</span> -->
+                      <div class="today-temperature">
+                        <span class="current-temp" id="current-temp">--</span>
+                        <span class="degrees">
+                          <a
+                            href="#"
+                            class="degree cels chosenDegree"
+                            id="celsius"
+                            >°C</a
+                          >
+                          |
+                          <a href="#" class="degree fahr" id="fahrenheit">°F</a>
+                        </span>
+                      </div>
+                      <div class="row mt-4" id="today-weather-details">
+                        <table class="table table-sm table-borderless">
+                          <tbody>
+                            <tr>
+                              <td scope="row">Feels like:</td>
+                              <td
+                                class="weather-details-values"
+                                id="feels-like"
+                              >
+                                -- °C
+                              </td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Temperature range:</td>
+                              <td
+                                class="weather-details-values"
+                                id="temp-range"
+                              >
+                                [--, --] °C
+                              </td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Precipitation:</td>
+                              <td
+                                class="weather-details-values"
+                                id="precipitation"
+                              >
+                                ?
+                              </td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Wind:</td>
+                              <td class="weather-details-values" id="wind">
+                                -
+                              </td>
+                            </tr>
+                            <tr>
+                              <td scope="row">Humidity:</td>
+                              <td class="weather-details-values" id="humidity">
+                                -
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- <div id="precipitation">Precipitation: 21%</div>
+                        <div id="wind">Wind: 6 km/h</div>
+                        <div id="humidity">Humidity: 0 %</div> -->
+                      </div>
+                    </div>
+                    <div class="col-6 text-center mt-0 p-0">
+                      <!-- <span class="today-temp">-5 °C</span> -->
+                      <!-- <span class="today-emoji mt-0 p-0">🌨</span> -->
+                      <img src="img/sunny_clouds.png" alt="" width="200" />
+                      <div class="today-details">
+                        <div id="today-day-time">Sunday 19:34</div>
+                        <div id="today-date">December 19th 2021</div>
+                        <div id="weather-description">Snowing</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-2 mb-1">
+                <div class="card-body" id="graph-card">
+                  <img
+                    class="temporary-graph img-fluid"
+                    src="img/temperature.jpeg"
+                    alt="graph-temporary"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <ul class="list-group list-group-flush text-center">
+                <li class="list-group-item border-bottom-0 p-0 m-0 other-li">
+                  <!-- pb-1 pt-2 -->
+                  <div class="card mb-1">
+                    <div class="card-body other-weather">
+                      <div class="other-day">Monday</div>
+                      <span class="other-emoji">🌤</span>
+                      <span class="other-temp">
+                        <span class="higher-limit"> 5</span>
+                        <span class="lower-limit">| 2 </span>
+                        °C
+                      </span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item border-bottom-0 p-0 other-li">
+                  <div class="card my-1">
+                    <div class="card-body other-weather">
+                      <div class="other-day">Tuesday</div>
+                      <span class="other-emoji">🌥</span>
+                      <span class="other-temp">
+                        <span class="higher-limit"> 2</span>
+                        <span class="lower-limit">| -1 </span>
+                        °C
+                      </span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item border-bottom-0 p-0 other-li">
+                  <div class="card my-1">
+                    <div class="card-body other-weather">
+                      <div class="other-day">Wednesday</div>
+                      <span class="other-emoji">🌩</span>
+                      <span class="other-temp">
+                        <span class="higher-limit"> 10</span>
+                        <span class="lower-limit">| 5 </span>
+                        °C
+                      </span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item border-bottom-0 p-0 other-li">
+                  <div class="card my-1">
+                    <div class="card-body other-weather">
+                      <div class="other-day">Thursday</div>
+                      <span class="other-emoji">🌨</span>
+                      <span class="other-temp">
+                        <span class="higher-limit"> -1</span>
+                        <span class="lower-limit">| -4 </span>
+                        °C
+                      </span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item border-bottom-0 p-0 other-li">
+                  <div class="card my-1">
+                    <div class="card-body other-weather">
+                      <div class="other-day">Friday</div>
+                      <span class="other-emoji">🌨</span>
+                      <span class="other-temp">
+                        <span class="higher-limit"> -5</span>
+                        <span class="lower-limit">| -7 </span>
+                        °C
+                      </span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item border-bottom-0 p-0 other-li">
+                  <div class="card mt-1 mb-2">
+                    <div class="card-body other-weather">
+                      <div class="other-day">Saturday</div>
+                      <span class="other-emoji">🌧</span>
+                      <span class="other-temp">
+                        <span class="higher-limit"> 10</span>
+                        <span class="lower-limit">| 7 </span>
+                        °C
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="src/index.js"></script>
+  </body>
+</html>
