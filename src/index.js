@@ -35,7 +35,6 @@ function formatDate(date, updated = false) {
 
   if (updated == true) {
     // if the date is for when the data was updated
-    console.log(date);
     document.querySelector(
       "#last-updated"
     ).innerHTML = `${day} ${hour}:${minutes}`;
@@ -50,20 +49,6 @@ function formatDate(date, updated = false) {
   }
 }
 
-function handleSubmit(event) {
-  event.preventDefault();
-  let cityInput = document.querySelector("#city-input").value.trim();
-  searchCity(cityInput);
-}
-
-function searchCity(city) {
-  let apiKey = "f82fa348ac5be4c0a63ee7d2f60d4443";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-  axios.get(apiUrl).then(updateWeather);
-
-  formatDate(new Date()); // update date
-}
-
 // Weather API
 function updateWeather(response) {
   let weatherData = response.data;
@@ -73,22 +58,22 @@ function updateWeather(response) {
   celsiusTemperature = weatherData.main.temp;
   document.querySelector("#current-temp").innerHTML =
     Math.round(celsiusTemperature);
-
   document.querySelector("#celsius").classList.add("chosenDegree");
   document.querySelector("#fahrenheit").classList.remove("chosenDegree");
 
   // Weather details:
-  let feelsLike = Math.round(weatherData.main.feels_like);
-  document.querySelector("#feels-like").innerHTML = `${feelsLike} °C`;
+  //let feelsLike = Math.round(weatherData.main.feels_like);
+  feelsLikeCelsius = Math.round(weatherData.main.feels_like);
+  document.querySelector("#feels-like").innerHTML = `${feelsLikeCelsius} °C`;
   // Temperature range:
-  let minTemp = Math.round(weatherData.main.temp_min);
-  let maxTemp = Math.round(weatherData.main.temp_max);
+  minTempCelsius = Math.round(weatherData.main.temp_min);
+  maxTempCelsius = Math.round(weatherData.main.temp_max);
   document.querySelector(
     "#temp-range"
-  ).innerHTML = `[${minTemp}, ${maxTemp}] °C`;
+  ).innerHTML = `[${minTempCelsius}, ${maxTempCelsius}] °C`;
 
-  let windSpeed = Math.round(weatherData.wind.speed);
-  document.querySelector("#wind").innerHTML = `${windSpeed} m/s`; // change units elsewhere?
+  windSpeedMetric = Math.round(weatherData.wind.speed);
+  document.querySelector("#wind").innerHTML = `${windSpeedMetric} m/s`; // change units elsewhere?
 
   let humidity = Math.round(weatherData.main.humidity);
   document.querySelector("#humidity").innerHTML = `${humidity} %`;
@@ -113,8 +98,36 @@ function updateWeather(response) {
   formatDate(new Date(response.data.dt * 1000), true);
 }
 
-// Celsius vs Fahrenheit:
-function changeDegree(event) {
+function searchCity(city) {
+  let apiKey = "f82fa348ac5be4c0a63ee7d2f60d4443";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+  axios.get(apiUrl).then(updateWeather);
+
+  formatDate(new Date()); // update date
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInput = document.querySelector("#city-input").value.trim();
+  searchCity(cityInput);
+}
+
+function searchCurrentLocation(position) {
+  let longitude = position.coords.longitude;
+  let latitude = position.coords.latitude;
+  let apiKey = "f82fa348ac5be4c0a63ee7d2f60d4443";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
+  axios.get(apiUrl).then(updateWeather);
+  formatDate(new Date());
+}
+
+// Celsius to Fahrenheit:
+function celsiusToFahrenheit(celsius) {
+  return Math.round((celsius * 9) / 5 + 32);
+}
+
+// Metric <-> Imperial:
+function changeUnits(event) {
   event.preventDefault();
   let todayTemp = document.querySelector("#current-temp");
 
@@ -125,23 +138,28 @@ function changeDegree(event) {
     todayTemp.innerHTML = Math.round(celsiusTemperature);
     celsiusSymbol.classList.add("chosenDegree");
     fahrSymbol.classList.remove("chosenDegree");
+    document.querySelector("#feels-like").innerHTML = `${feelsLikeCelsius} °C`;
+    document.querySelector(
+      "#temp-range"
+    ).innerHTML = `[${minTempCelsius}, ${maxTempCelsius}] °C`;
+    document.querySelector("#wind").innerHTML = `${windSpeedMetric} m/s`;
   } else if (clickedDegree === "fahrenheit") {
-    todayTemp.innerHTML = Math.round((celsiusTemperature * 9) / 5 + 32); // assuming whats there is in C deg!!
+    todayTemp.innerHTML = celsiusToFahrenheit(celsiusTemperature); // assuming whats there is in C deg!!
     fahrSymbol.classList.add("chosenDegree");
     celsiusSymbol.classList.remove("chosenDegree");
+    document.querySelector("#feels-like").innerHTML = `${celsiusToFahrenheit(
+      feelsLikeCelsius
+    )} °F`;
+    document.querySelector("#temp-range").innerHTML = `[${celsiusToFahrenheit(
+      minTempCelsius
+    )}, ${celsiusToFahrenheit(maxTempCelsius)}] °F`;
+
+    // Change wind speed to imperial units:
+    let windSpeedImperial = Math.round(windSpeedMetric * 2.237);
+    document.querySelector("#wind").innerHTML = `${windSpeedImperial} mph`;
   } else {
     // Do nothing
   }
-}
-
-function getWeatherCurrentLocation(position) {
-  let longitude = position.coords.longitude;
-  let latitude = position.coords.latitude;
-  let apiKey = "f82fa348ac5be4c0a63ee7d2f60d4443";
-  let units = "metric";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
-  axios.get(apiUrl).then(updateWeather);
-  formatDate(new Date()); // update date - somewhere else?
 }
 
 searchCity("London"); // when the page is loaded
@@ -153,15 +171,19 @@ cityForm.addEventListener("submit", handleSubmit);
 // Current button
 let currentButton = document.querySelector("#current-button");
 currentButton.addEventListener("click", function (event) {
-  navigator.geolocation.getCurrentPosition(getWeatherCurrentLocation);
+  navigator.geolocation.getCurrentPosition(searchCurrentLocation);
 });
 
 // F and C buttons
 
 let celsiusTemperature = null;
+let feelsLikeCelsius = null;
+let minTempCelsius = null;
+let maxTempCelsius = null;
+let windSpeedMetric = null;
 
 let celsiusLink = document.querySelector("#celsius");
-celsiusLink.addEventListener("click", changeDegree);
+celsiusLink.addEventListener("click", changeUnits);
 
 let fahrenheitLink = document.querySelector("#fahrenheit");
-fahrenheitLink.addEventListener("click", changeDegree);
+fahrenheitLink.addEventListener("click", changeUnits);
