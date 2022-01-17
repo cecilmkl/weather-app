@@ -9,17 +9,19 @@
 
 /* ------ Background colors -----*/
 .whole-app,
-.other-li {
+.upcoming-days li {
   background: rgba(255, 235, 205, 1);
 }
 
-#today,
-.other-weather,
-#graph-card,
-#quote-card {
+.card-body:not(.whole-app) {
   background: rgba(255, 235, 205, 0.5);
 }
+
 /* ----- End Backgrounds--------*/
+
+a {
+  text-decoration: none;
+}
 
 #search-button,
 #current-button {
@@ -38,10 +40,6 @@
   font-size: 40px;
   font-weight: 500;
   text-transform: capitalize;
-}
-
-.today-emoji {
-  font-size: 120px;
 }
 
 table {
@@ -67,8 +65,16 @@ td.weather-details-values {
 #today-weather-details {
   font-size: normal;
 }
-.other-weather {
+
+.upcoming-days {
   font-size: 18px;
+}
+.upcoming-days .card-body {
+  padding: 12px;
+}
+
+.upcoming-days li {
+  padding: 10px;
 }
 
 .other-emoji {
@@ -92,20 +98,21 @@ td.weather-details-values {
   font-weight: 300;
 }
 
-.degrees {
-  font-size: 70%;
-}
-
 .degree {
   color: #212529;
-  text-decoration: none;
-  /* font-weight: 700; */
+  font-size: 50%;
 }
 
-.degree:hover {
+.degree:not(.chosenDegree):hover {
   color: rgb(228, 187, 126);
 }
 
 .chosenDegree {
   font-weight: 500;
+  cursor: default;
+}
+
+.chosenDegree:hover {
+  text-decoration: none;
+  color: #212529;
 }

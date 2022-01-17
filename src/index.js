@@ -51,10 +51,8 @@ function handleSubmit(event) {
 
 function searchCity(city) {
   let apiKey = "f82fa348ac5be4c0a63ee7d2f60d4443";
-  let units = "metric";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${units}&appid=${apiKey}`;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
   axios.get(apiUrl).then(updateWeather);
-  console.log(apiUrl);
 
   formatDate(new Date()); // update date
 }
@@ -65,8 +63,14 @@ function updateWeather(response) {
   // Update cityname
   document.querySelector("#cityname").innerHTML = weatherData.name;
   // Update temperature
-  let temperature = Math.round(weatherData.main.temp);
-  document.querySelector("#current-temp").innerHTML = `${temperature}`;
+  celsiusTemperature = weatherData.main.temp;
+  document.querySelector("#current-temp").innerHTML =
+    Math.round(celsiusTemperature);
+
+  document.querySelector("#celsius").classList.add("chosenDegree");
+  document.querySelector("#fahrenheit").classList.remove("chosenDegree");
+  console.log(document.querySelector("#celsius"));
+
   // Weather details:
   let feelsLike = Math.round(weatherData.main.feels_like);
   document.querySelector("#feels-like").innerHTML = `${feelsLike} °C`;
@@ -83,17 +87,23 @@ function updateWeather(response) {
   let humidity = Math.round(weatherData.main.humidity);
   document.querySelector("#humidity").innerHTML = `${humidity} %`;
 
-  let weatherDescription = document.querySelector("#weather-description");
-  weatherDescription.innerHTML = weatherData.weather[0].main;
+  document.querySelector("#weather-description").innerHTML =
+    weatherData.weather[0].main;
 
   // Precipitation only appears when it is raining
   let precipitation = document.querySelector("#precipitation");
   if (weatherData.hasOwnProperty("rain")) {
-    console.log(response.data.rain["1h"]);
     precipitation.innerHTML = `${weatherData.rain["1h"]} mm`;
   } else {
     precipitation.innerHTML = "-";
   }
+
+  // update todays icon
+  let iconCode = response.data.weather[0].icon;
+  let description = response.data.weather[0].description;
+  let iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  document.querySelector("#icon").setAttribute("src", iconUrl);
+  document.querySelector("#icon").setAttribute("alt", description);
 }
 
 // Celsius vs Fahrenheit:
@@ -109,7 +119,8 @@ function changeDegree(event) {
     !celsiusSymbol.classList.contains("chosenDegree")
   ) {
     // if celsius isn't already chosen
-    todayTemp.innerHTML = Math.round(((todayTemp.innerHTML - 32) * 5) / 9); // made up temperature
+    //todayTemp.innerHTML = Math.round(((todayTemp.innerHTML - 32) * 5) / 9); // made up temperature
+    todayTemp.innerHTML = Math.round(celsiusTemperature);
     celsiusSymbol.classList.add("chosenDegree");
     fahrSymbol.classList.remove("chosenDegree");
   } else if (
@@ -132,7 +143,6 @@ function getWeatherCurrentLocation(position) {
   let units = "metric";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
   axios.get(apiUrl).then(updateWeather);
-  console.log(apiUrl);
   formatDate(new Date()); // update date - somewhere else?
 }
 
@@ -149,6 +159,9 @@ currentButton.addEventListener("click", function (event) {
 });
 
 // F and C buttons
+
+let celsiusTemperature = null;
+
 let celsiusLink = document.querySelector("#celsius");
 celsiusLink.addEventListener("click", changeDegree);
 

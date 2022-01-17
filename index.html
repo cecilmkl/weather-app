@@ -23,16 +23,17 @@
   </head>
   <body>
     <div class="container">
-      <div class="card mt-4 whole-app">
-        <div class="card-body">
+      <div class="card mt-4">
+        <div class="card-body whole-app">
           <div class="row">
-            <div class="col-8">
+            <div class="col-8 mb-0">
               <form class="input-group mb-2" id="city-form">
                 <input
                   type="text"
                   class="form-control"
                   placeholder="City..."
                   id="city-input"
+                  autocomplete="off"
                 />
                 <div class="input-group-append">
                   <button class="btn" type="button" id="search-button">
@@ -43,15 +44,14 @@
                   </button>
                 </div>
               </form>
-              <div class="card today">
-                <div class="card-body" id="today">
+              <div class="card">
+                <div class="card-body">
                   <div class="row">
                     <div class="col-6 mt-0" id="today-weather-details">
                       <h1 class="cityname" id="cityname"></h1>
-                      <!-- <span class="today-emoji">🌨</span> -->
                       <div class="today-temperature">
                         <span class="current-temp" id="current-temp">--</span>
-                        <span class="degrees">
+                        <span class="">
                           <a
                             href="#"
                             class="degree cels chosenDegree"
@@ -106,15 +106,11 @@
                             </tr>
                           </tbody>
                         </table>
-                        <!-- <div id="precipitation">Precipitation: 21%</div>
-                        <div id="wind">Wind: 6 km/h</div>
-                        <div id="humidity">Humidity: 0 %</div> -->
                       </div>
                     </div>
                     <div class="col-6 text-center mt-0 p-0">
-                      <!-- <span class="today-temp">-5 °C</span> -->
-                      <!-- <span class="today-emoji mt-0 p-0">🌨</span> -->
-                      <img src="img/sunny_clouds.png" alt="" width="200" />
+                      <!-- <img src="img/sunny_clouds.png" alt="" width="200" /> -->
+                      <img src="#" alt="" id="icon" width="150" />
                       <div class="today-details">
                         <div id="today-day-time">Sunday 19:34</div>
                         <div id="today-date">December 19th 2021</div>
@@ -125,7 +121,7 @@
                 </div>
               </div>
               <div class="card mt-2 mb-0">
-                <div class="card-body" id="graph-card">
+                <div class="card-body">
                   <img
                     class="temporary-graph img-fluid"
                     src="img/temperature.jpeg"
@@ -134,12 +130,12 @@
                 </div>
               </div>
             </div>
-            <div class="col-4" id="upcoming-days">
+            <div class="col-4 upcoming-days">
               <ul class="list-group list-group-flush text-center">
-                <li class="list-group-item border-bottom-0 p-0 m-0 other-li">
+                <li class="list-group-item border-bottom-0 p-0 m-0">
                   <!-- pb-1 pt-2 -->
                   <div class="card mb-1">
-                    <div class="card-body other-weather">
+                    <div class="card-body">
                       <div class="other-day">Monday</div>
                       <span class="other-emoji">🌤</span>
                       <span class="other-temp">
@@ -150,9 +146,9 @@
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item border-bottom-0 p-0 other-li">
+                <li class="list-group-item border-bottom-0 p-0">
                   <div class="card my-1">
-                    <div class="card-body other-weather">
+                    <div class="card-body">
                       <div class="other-day">Tuesday</div>
                       <span class="other-emoji">🌥</span>
                       <span class="other-temp">
@@ -163,9 +159,9 @@
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item border-bottom-0 p-0 other-li">
+                <li class="list-group-item border-bottom-0 p-0">
                   <div class="card my-1">
-                    <div class="card-body other-weather">
+                    <div class="card-body">
                       <div class="other-day">Wednesday</div>
                       <span class="other-emoji">🌩</span>
                       <span class="other-temp">
@@ -176,9 +172,9 @@
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item border-bottom-0 p-0 other-li">
+                <li class="list-group-item border-bottom-0 p-0">
                   <div class="card my-1">
-                    <div class="card-body other-weather">
+                    <div class="card-body">
                       <div class="other-day">Thursday</div>
                       <span class="other-emoji">🌨</span>
                       <span class="other-temp">
@@ -189,9 +185,9 @@
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item border-bottom-0 p-0 other-li">
+                <li class="list-group-item border-bottom-0 p-0">
                   <div class="card my-1">
-                    <div class="card-body other-weather">
+                    <div class="card-body">
                       <div class="other-day">Friday</div>
                       <span class="other-emoji">🌨</span>
                       <span class="other-temp">
@@ -202,9 +198,9 @@
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item border-bottom-0 p-0 m-0 other-li">
+                <li class="list-group-item border-bottom-0 p-0 m-0">
                   <div class="card mt-1 mb-0">
-                    <div class="card-body other-weather">
+                    <div class="card-body">
                       <div class="other-day">Saturday</div>
                       <span class="other-emoji">🌧</span>
                       <span class="other-temp">
