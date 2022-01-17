@@ -98,9 +98,12 @@ td.weather-details-values {
   font-weight: 300;
 }
 
+.degrees {
+  font-size: 60%;
+}
+
 .degree {
   color: #212529;
-  font-size: 50%;
 }
 
 .degree:not(.chosenDegree):hover {
@@ -115,4 +118,10 @@ td.weather-details-values {
 .chosenDegree:hover {
   text-decoration: none;
   color: #212529;
+}
+
+.updated {
+  /* position: relative;
+  right: -80px; */
+  text-align: right;
 }

@@ -51,15 +51,12 @@
                       <h1 class="cityname" id="cityname"></h1>
                       <div class="today-temperature">
                         <span class="current-temp" id="current-temp">--</span>
-                        <span class="">
-                          <a
-                            href="#"
-                            class="degree cels chosenDegree"
-                            id="celsius"
+                        <span class="degrees">
+                          <a href="#" class="degree chosenDegree" id="celsius"
                             >°C</a
                           >
                           |
-                          <a href="#" class="degree fahr" id="fahrenheit">°F</a>
+                          <a href="#" class="degree" id="fahrenheit">°F</a>
                         </span>
                       </div>
                       <div class="row mt-4" id="today-weather-details">
@@ -109,7 +106,6 @@
                       </div>
                     </div>
                     <div class="col-6 text-center mt-0 p-0">
-                      <!-- <img src="img/sunny_clouds.png" alt="" width="200" /> -->
                       <img src="#" alt="" id="icon" width="150" />
                       <div class="today-details">
                         <div id="today-day-time">Sunday 19:34</div>
@@ -133,7 +129,6 @@
             <div class="col-4 upcoming-days">
               <ul class="list-group list-group-flush text-center">
                 <li class="list-group-item border-bottom-0 p-0 m-0">
-                  <!-- pb-1 pt-2 -->
                   <div class="card mb-1">
                     <div class="card-body">
                       <div class="other-day">Monday</div>
@@ -216,8 +211,15 @@
           </div>
         </div>
       </div>
-      <a href="https://github.com/cecilmkl/weather-app">Open-source code</a> by
-      Cecilie K
+      <div class="row small">
+        <div class="col-8">
+          <a href="https://github.com/cecilmkl/weather-app">Open-source code</a>
+          by Cecilie K
+        </div>
+        <div class="col-4 updated">
+          Last updated: <span id="last-updated">-</span>
+        </div>
+      </div>
     </div>
     <script src="src/index.js"></script>
   </body>

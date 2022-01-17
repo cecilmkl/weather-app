@@ -1,4 +1,4 @@
-function formatDate(date) {
+function formatDate(date, updated = false) {
   let days = [
     "Sunday",
     "Monday",
@@ -33,14 +33,21 @@ function formatDate(date) {
   hour = ("0" + hour).slice(-2);
   minutes = ("0" + minutes).slice(-2);
 
-  // Change day and time
-  let dayTime = document.querySelector("#today-day-time");
-  dayTime.innerHTML = `${day} ${hour}:${minutes}`;
+  if (updated == true) {
+    // if the date is for when the data was updated
+    console.log(date);
+    document.querySelector(
+      "#last-updated"
+    ).innerHTML = `${day} ${hour}:${minutes}`;
+  } else {
+    // if the date is the local time
+    let dayTime = document.querySelector("#today-day-time");
+    dayTime.innerHTML = `${day} ${hour}:${minutes}`;
 
-  // Change date and year
-  document.querySelector(
-    "#today-date"
-  ).innerHTML = `${month} ${dayOfMonth}, ${year}`;
+    document.querySelector(
+      "#today-date"
+    ).innerHTML = `${month} ${dayOfMonth}, ${year}`;
+  }
 }
 
 function handleSubmit(event) {
@@ -69,7 +76,6 @@ function updateWeather(response) {
 
   document.querySelector("#celsius").classList.add("chosenDegree");
   document.querySelector("#fahrenheit").classList.remove("chosenDegree");
-  console.log(document.querySelector("#celsius"));
 
   // Weather details:
   let feelsLike = Math.round(weatherData.main.feels_like);
@@ -104,6 +110,7 @@ function updateWeather(response) {
   let iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
   document.querySelector("#icon").setAttribute("src", iconUrl);
   document.querySelector("#icon").setAttribute("alt", description);
+  formatDate(new Date(response.data.dt * 1000), true);
 }
 
 // Celsius vs Fahrenheit:
@@ -114,25 +121,16 @@ function changeDegree(event) {
   let clickedDegree = event.target.id;
   let fahrSymbol = document.querySelector("#fahrenheit");
   let celsiusSymbol = document.querySelector("#celsius");
-  if (
-    clickedDegree === "celsius" &&
-    !celsiusSymbol.classList.contains("chosenDegree")
-  ) {
-    // if celsius isn't already chosen
-    //todayTemp.innerHTML = Math.round(((todayTemp.innerHTML - 32) * 5) / 9); // made up temperature
+  if (clickedDegree === "celsius") {
     todayTemp.innerHTML = Math.round(celsiusTemperature);
     celsiusSymbol.classList.add("chosenDegree");
     fahrSymbol.classList.remove("chosenDegree");
-  } else if (
-    clickedDegree === "fahrenheit" &&
-    !fahrSymbol.classList.contains("chosenDegree")
-  ) {
-    // if fahrenheit isn't already chosen
-    todayTemp.innerHTML = Math.round((todayTemp.innerHTML * 9) / 5 + 32); // assuming whats there is in C deg!!
+  } else if (clickedDegree === "fahrenheit") {
+    todayTemp.innerHTML = Math.round((celsiusTemperature * 9) / 5 + 32); // assuming whats there is in C deg!!
     fahrSymbol.classList.add("chosenDegree");
     celsiusSymbol.classList.remove("chosenDegree");
   } else {
-    // Do nothing if celsius or fahrenheit is already chosen when pressed
+    // Do nothing
   }
 }
 
