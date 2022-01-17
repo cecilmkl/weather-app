@@ -92,7 +92,7 @@ function updateWeather(response) {
   // update todays icon
   let iconCode = response.data.weather[0].icon;
   let description = response.data.weather[0].description;
-  let iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  let iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
   document.querySelector("#icon").setAttribute("src", iconUrl);
   document.querySelector("#icon").setAttribute("alt", description);
   formatDate(new Date(response.data.dt * 1000), true);
