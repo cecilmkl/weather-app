@@ -121,6 +121,33 @@ function searchCurrentLocation(position) {
   formatDate(new Date());
 }
 
+// Forecast
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<ul
+                class="list-group list-group-flush text-center"
+                id="forecast"
+              >`;
+  let days = ["Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue"];
+  days.forEach(function (day) {
+    forecastHTML += `<li class="list-group-item border-bottom-0 p-0">
+                  <div class="card my-1">
+                    <div class="card-body">
+                      <div class="other-day">${day}</div>
+                      <span class="other-emoji">🌤</span>
+                      <span class="other-temp">
+                        <span class="higher-limit"> 5</span>
+                        <span class="lower-limit">| 2 </span>
+                        °C
+                      </span>
+                    </div>
+                  </div>
+                </li>`;
+  });
+
+  forecastElement.innerHTML = forecastHTML + "</ul>";
+}
+
 // Celsius to Fahrenheit:
 function celsiusToFahrenheit(celsius) {
   return Math.round((celsius * 9) / 5 + 32);
@@ -187,3 +214,5 @@ celsiusLink.addEventListener("click", changeUnits);
 
 let fahrenheitLink = document.querySelector("#fahrenheit");
 fahrenheitLink.addEventListener("click", changeUnits);
+
+displayForecast();
