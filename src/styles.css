@@ -77,11 +77,6 @@ td.weather-details-values {
   padding: 10px;
 }
 
-.other-emoji {
-  font-size: 27px;
-  padding: 0 5px;
-}
-
 .lower-limit {
   font-weight: 100;
   color: rgba(0, 0, 0, 0.8);
