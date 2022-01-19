@@ -146,9 +146,18 @@ function displayForecast(response) {
     let description = forecastDay.weather[0].description;
     let tempMax = Math.round(forecastDay.temp.max);
     let tempMin = Math.round(forecastDay.temp.min);
+    // changing vertical spacing
+    let vertical_spacing = "";
+    if (index == 0) {
+      vertical_spacing = "mb-1";
+    } else if (index == 5) {
+      vertical_spacing = "mt-1";
+    } else {
+      vertical_spacing = "my-1";
+    }
 
     forecastHTML += `<li class="list-group-item border-bottom-0 p-0">
-                  <div class="card my-1">
+                  <div class="card ${vertical_spacing}">
                     <div class="card-body">
                       <span class="forecast-day">${formatDay(
                         forecastDay.dt
