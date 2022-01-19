@@ -23,6 +23,22 @@ a {
   text-decoration: none;
 }
 
+table {
+  table-layout: fixed;
+  width: 100%;
+  padding: 1px 1px;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+td {
+  padding: 0px;
+}
+
+td.weather-details-values {
+  width: 35%;
+}
+
 #search-button,
 #current-button {
   border: 1px solid #212529;
@@ -36,61 +52,26 @@ a {
   background-color: rgb(228, 187, 126);
 }
 
-#cityname {
-  font-size: 40px;
+.cityname {
+  font-size: 50px;
   font-weight: 500;
   text-transform: capitalize;
 }
 
-table {
-  table-layout: fixed;
-  width: 100%;
-  padding: 1px 1px;
-  font-size: 15px;
-}
-
-td {
-  padding: 0px;
-}
-
-td.weather-details-values {
-  width: 35%;
-}
-.today-details {
-  margin-top: 5px;
-  font-size: 22px;
-  font-weight: 100;
-}
-
-#today-weather-details {
+.today-weather-details {
   font-size: normal;
-}
-
-.upcoming-days {
-  font-size: 18px;
-}
-.upcoming-days .card-body {
-  padding: 12px;
-}
-
-.upcoming-days li {
-  padding: 10px;
-}
-
-.lower-limit {
-  font-weight: 100;
-  color: rgba(0, 0, 0, 0.8);
-}
-
-.temporary-graph {
-  display: block;
-  margin: 0 auto;
-  width: 300px;
+  /* margin-top: 30px; */
 }
 
 .today-temperature {
   font-size: 50px;
   font-weight: 300;
+  padding: 16px 0px;
+}
+
+.lower-limit {
+  font-weight: 100;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .degrees {
@@ -112,6 +93,23 @@ td.weather-details-values {
 
 .chosenDegree:hover {
   color: #212529;
+}
+
+.today-details {
+  margin-top: 5px;
+  font-size: 22px;
+  font-weight: 100;
+}
+
+.upcoming-days {
+  font-size: 18px;
+}
+.upcoming-days .card-body {
+  padding: 12px;
+}
+
+.upcoming-days li {
+  padding: 10px;
 }
 
 .updated {

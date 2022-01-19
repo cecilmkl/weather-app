@@ -98,10 +98,11 @@ function updateWeather(response) {
   // update todays icon
   let iconCode = response.data.weather[0].icon;
   let description = response.data.weather[0].description;
-  let iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  let iconUrl = `img/${iconCode}.png`;
   document.querySelector("#icon").setAttribute("src", iconUrl);
   document.querySelector("#icon").setAttribute("alt", description);
 
+  formatDate(new Date(new Date() - 3.6e6 + response.data.timezone * 1000));
   formatDate(new Date(response.data.dt * 1000), true);
   getForecast(response.data.coord);
 }
@@ -110,8 +111,6 @@ function searchCity(city) {
   let apiKey = "f82fa348ac5be4c0a63ee7d2f60d4443";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
   axios.get(apiUrl).then(updateWeather);
-
-  formatDate(new Date()); // update date
 }
 
 function handleSubmit(event) {
@@ -126,7 +125,7 @@ function searchCurrentLocation(position) {
   let apiKey = "f82fa348ac5be4c0a63ee7d2f60d4443";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
   axios.get(apiUrl).then(updateWeather);
-  formatDate(new Date());
+  //formatDate(new Date());
 }
 
 // Forecast
@@ -138,31 +137,31 @@ function displayForecast(response) {
                 id="forecast"
               >`;
   forecast.forEach(function (forecastDay, index) {
-    if (index >= 6) {
-      // Only interested in displaying the first 6 days
+    if (index == 0 || index > 6) {
+      // Only interested in displaying the next 6 days
       return;
     }
     let iconCode = forecastDay.weather[0].icon;
     let description = forecastDay.weather[0].description;
     let tempMax = Math.round(forecastDay.temp.max);
     let tempMin = Math.round(forecastDay.temp.min);
+    let day = formatDay(forecastDay.dt);
     // changing vertical spacing
     let vertical_spacing = "";
-    if (index == 0) {
+    if (index == 1) {
       vertical_spacing = "mb-1";
-    } else if (index == 5) {
+    } else if (index == 6) {
       vertical_spacing = "mt-1";
     } else {
       vertical_spacing = "my-1";
     }
+    console.log(index);
 
     forecastHTML += `<li class="list-group-item border-bottom-0 p-0">
                   <div class="card ${vertical_spacing}">
                     <div class="card-body">
-                      <span class="forecast-day">${formatDay(
-                        forecastDay.dt
-                      )}</span>
-                      <img src="http://openweathermap.org/img/wn/${iconCode}@2x.png"
+                      <span class="forecast-day">${day}</span>
+                      <img src="img/${iconCode}.png"
                       alt="${description}" width="42" />
                       <span class="forecast-temp">
                         <span class="higher-limit"> ${tempMax}</span>

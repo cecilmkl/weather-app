@@ -26,7 +26,7 @@
       <div class="card mt-4">
         <div class="card-body whole-app">
           <div class="row">
-            <div class="col-8 mb-0 today-weather">
+            <div class="col-8 mb-0 today-weather d-flex flex-column">
               <form class="input-group mb-2" id="city-form">
                 <input
                   type="text"
@@ -44,11 +44,11 @@
                   </button>
                 </div>
               </form>
-              <div class="card">
+              <div class="card flex-fill">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-6 mt-0" id="today-weather-details">
-                      <h1 class="cityname" id="cityname"></h1>
+                    <h1 class="cityname" id="cityname"></h1>
+                    <div class="col-6 mt-0">
                       <div class="today-temperature">
                         <span class="current-temp" id="current-temp">--</span>
                         <span class="degrees">
@@ -59,7 +59,7 @@
                           <a href="#" class="degree" id="fahrenheit">°F</a>
                         </span>
                       </div>
-                      <div class="row mt-4" id="today-weather-details">
+                      <div class="row today-weather-details">
                         <table class="table table-sm table-borderless">
                           <tbody>
                             <tr>
@@ -106,11 +106,17 @@
                       </div>
                     </div>
                     <div class="col-6 text-center mt-0 p-0">
-                      <img src="#" alt="" id="icon" width="150" />
+                      <img
+                        src="#"
+                        alt=""
+                        id="icon"
+                        width="200"
+                        style="margin: -20% 0px -10% 0px"
+                      />
                       <div class="today-details">
-                        <div id="today-day-time">Sunday 19:34</div>
-                        <div id="today-date">December 19th 2021</div>
-                        <div id="weather-description">Snowing</div>
+                        <div id="today-day-time"></div>
+                        <div id="today-date"></div>
+                        <div id="weather-description"></div>
                       </div>
                     </div>
                   </div>
