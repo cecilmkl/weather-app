@@ -11,7 +11,6 @@
       crossorigin="anonymous"
     />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- Style imports: -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -26,7 +25,7 @@
       <div class="card mt-4">
         <div class="card-body whole-app">
           <div class="row">
-            <div class="col-8 mb-0 today-weather d-flex flex-column">
+            <div class="col-8 mb-0 d-flex flex-column today-weather">
               <form class="input-group mb-2" id="city-form">
                 <input
                   type="text"
@@ -46,10 +45,10 @@
               </form>
               <div class="card flex-fill">
                 <div class="card-body">
-                  <div class="row">
+                  <div class="row today">
                     <h1 class="cityname" id="cityname"></h1>
                     <div class="col-6 mt-0">
-                      <div class="today-temperature">
+                      <div class="temperature">
                         <span class="current-temp" id="current-temp">--</span>
                         <span class="degrees">
                           <a href="#" class="degree chosenDegree" id="celsius"
@@ -59,9 +58,9 @@
                           <a href="#" class="degree" id="fahrenheit">°F</a>
                         </span>
                       </div>
-                      <div class="row today-weather-details">
+                      <div class="row weather-details">
                         <table class="table table-sm table-borderless">
-                          <tbody>
+                          <tbody id="forecast-table">
                             <tr>
                               <td scope="row">Feels like:</td>
                               <td
@@ -78,15 +77,6 @@
                                 id="temp-range"
                               >
                                 [--, --] °C
-                              </td>
-                            </tr>
-                            <tr>
-                              <td scope="row">Precipitation:</td>
-                              <td
-                                class="weather-details-values"
-                                id="precipitation"
-                              >
-                                -
                               </td>
                             </tr>
                             <tr>
@@ -113,7 +103,7 @@
                         width="200"
                         style="margin: -20% 0px -10% 0px"
                       />
-                      <div class="today-details">
+                      <div class="details">
                         <div id="today-day-time"></div>
                         <div id="today-date"></div>
                         <div id="weather-description"></div>
@@ -138,7 +128,7 @@
           by Cecilie K
         </div>
         <div class="col-5 updated">
-          Last updated: <span id="last-updated">-</span>
+          Last updated (system time): <span id="last-updated">-</span>
         </div>
       </div>
     </div>

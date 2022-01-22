@@ -39,7 +39,7 @@ function formatDate(date, updated = false) {
       "#last-updated"
     ).innerHTML = `${day} ${hour}:${minutes}`;
   } else {
-    // if the date is the local time
+    // if the date is the local system time
     let dayTime = document.querySelector("#today-day-time");
     dayTime.innerHTML = `${day} ${hour}:${minutes}`;
 
@@ -61,7 +61,7 @@ function updateWeather(response) {
   let weatherData = response.data;
   // Update cityname
   document.querySelector("#cityname").innerHTML = weatherData.name;
-  // Update temperature
+  //  temperature
   celsiusTemperature = weatherData.main.temp;
   document.querySelector("#current-temp").innerHTML =
     Math.round(celsiusTemperature);
@@ -87,12 +87,16 @@ function updateWeather(response) {
   document.querySelector("#weather-description").innerHTML =
     weatherData.weather[0].main;
 
-  // Precipitation only appears when it is raining
-  let precipitation = document.querySelector("#precipitation");
+  let forecastTable = document.querySelector("#forecast-table");
   if (weatherData.hasOwnProperty("rain")) {
-    precipitation.innerHTML = `${weatherData.rain["1h"]} mm`;
-  } else {
-    precipitation.innerHTML = "-";
+    forecastTable.innerHTML += `<tr>
+                      <td scope="row">Precipitation:</td>
+                      <td
+                        class="weather-details-values"
+                        id="precipitation"
+                        > ${weatherData.rain["1h"]} mm 
+                      </td>
+                    </tr>`;
   }
 
   // update todays icon
@@ -115,8 +119,9 @@ function searchCity(city) {
 
 function handleSubmit(event) {
   event.preventDefault();
-  let cityInput = document.querySelector("#city-input").value.trim();
-  searchCity(cityInput);
+  let cityInput = document.querySelector("#city-input");
+  searchCity(cityInput.value.trim());
+  cityInput.value = "";
 }
 
 function searchCurrentLocation(position) {
@@ -125,7 +130,6 @@ function searchCurrentLocation(position) {
   let apiKey = "f82fa348ac5be4c0a63ee7d2f60d4443";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
   axios.get(apiUrl).then(updateWeather);
-  //formatDate(new Date());
 }
 
 // Forecast
@@ -155,7 +159,6 @@ function displayForecast(response) {
     } else {
       vertical_spacing = "my-1";
     }
-    console.log(index);
 
     forecastHTML += `<li class="list-group-item border-bottom-0 p-0">
                   <div class="card ${vertical_spacing}">
@@ -259,6 +262,9 @@ searchCity("London"); // when the page is loaded
 // Search for city button
 let cityForm = document.querySelector("#city-form");
 cityForm.addEventListener("submit", handleSubmit);
+
+let searchButton = document.querySelector("#search-button");
+searchButton.addEventListener("click", handleSubmit);
 
 // Current button
 let currentButton = document.querySelector("#current-button");
